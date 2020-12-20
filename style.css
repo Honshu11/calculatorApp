@@ -45,7 +45,7 @@ body {
     overflow: hidden;
 }
 
-.temp-result {
+.tempDisplay {
     position: absolute;
     bottom: 0;
     left: 10;
@@ -59,4 +59,13 @@ body {
     grid-template: repeat(4, 1fr) / repeat(4, 1fr);
 }
 
+.equals {
+  background-color: orange;
+}
+
+button {
+  color: white;
+  background-color: gray;
+  cursor: pointer;
+}
 
