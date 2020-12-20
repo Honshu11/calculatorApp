@@ -5,8 +5,8 @@ const display2 = document.querySelector(".display-2");
 const tempDisplay = document.querySelector(".tempDisplay");
 
 const number = document.querySelectorAll(".numbers");
-const operations = document.querySelectorAll(".operation");
-const equals = document.querySelector(".equal");
+const operation = document.querySelectorAll(".operations"); //quesrySelectorAll creates a node, thus can be iterated through.
+const equal = document.querySelector(".equals");
 const allClear = document.querySelector(".allClear");
 const clear = document.querySelector(".clear");
 
@@ -27,9 +27,66 @@ number.forEach( numbers => {
     } else if(event.target.innerText === '.' && hasDecimal){
       return;
     }
-    displayInput2 += event.target.innerText;
+    displayInput2 += event.target.innerText; // sets the innerText into the displayInput2 outlay
     display2.innerText = displayInput2;
   })
 })
 
+
+operation.forEach( operations => {
+	operations.addEventListener('click', (event) =>{
+		if(!displayInput2) return;
+		hasDecimal = false;
+		let operationName = event.target.innerText;
+		if(displayInput1 && displayInput2 && lastResult){
+			calculate(); // create function to to the arithmitic
+		} else {
+			result = parseFloat(displayInput2);
+		}
+		clearNum(operationName); // function to clear input from display
+		lastResult = operationName;
+		console.log(result);
+	})
+})
+
+function clearNum(name = ""){
+	displayInput1 += displayInput2 + ' ' + name + ' ';
+	display1.innerText = displayInput1;
+	display2.innerText = "";
+	displayInput2 = "";
+	tempDisplay.innerText = result;
+}
+
+function calculate(){
+	if(lastResult === '*'){
+		result = parseFloat(result) * parseFloat(displayInput2);
+	} else if(lastResult === '+'){
+		result = parseFloat(result) + parseFloat(displayInput2);
+	} else if(lastResult === '-'){
+		result = parseFloat(result) - parseFloat(displayInput2);
+	} else if(lastResult === '/'){
+		result = parseFloat(result) / parseFloat(displayInput2);
+	} else if(lastResult === '%'){
+		result = parseFloat(result) % parseFloat(displayInput2);
+	}
+}
+
+equal.addEventListener('click', (event) =>{
+	if(!displayInput1 || !displayInput2) return;
+	hasDecimal = false;
+	calculate();
+	clearNum();
+	displayInput2.innerText = result;
+	tempDisplay.innerText = "";
+	displayInput2 = result;
+	displayInput1 = "";
+})
+
+
+
+allClear.addEventListener('click', deleteAll); // try to single out event target to delete number from display input
+
+function deleteAll(){
+	console.log(event);
+}
 
