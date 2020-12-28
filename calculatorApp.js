@@ -22,7 +22,7 @@ let hasDecimal = false;
 
 number.forEach( numbers => {
   numbers.addEventListener('click', (event) =>{
-    if(event.target.innerText === '.' && !hasDecimal){  //handles more than 2 decimal points
+    if(event.target.innerText === '.' && !hasDecimal){  //handles more than 2 decimal points.. should.
       hasDecimal = true;      
     } else if(event.target.innerText === '.' && hasDecimal){
       return;
@@ -39,7 +39,7 @@ operation.forEach( operations => {
 		hasDecimal = false;
 		let operationName = event.target.innerText;
 		if(displayInput1 && displayInput2 && lastResult){
-			calculate(); // create function to to the arithmitic
+			calculate(); // create function to do the arithmitic
 		} else {
 			result = parseFloat(displayInput2);
 		}
@@ -47,6 +47,38 @@ operation.forEach( operations => {
 		lastResult = operationName;
 		console.log(result);
 	})
+})
+
+equal.addEventListener('click', (event) => {
+	if(!displayInput1 || !displayInput2) return;
+	hasDecimal = false;
+	calculate();
+	clearNum();
+	displayInput2.innerText = result;
+	tempDisplay.innerText = "";
+	displayInput2 = result;
+	displayInput1 = "";
+})
+
+
+allClear.addEventListener('click', (event) => { //clears all equations from calculator
+	display2.innerText = "";
+	display1.innerText = "";
+	tempDisplay.innerText = "0";
+	result = "";
+	displayInput1 = "";
+	displayInput2 = "";
+})
+
+clear.addEventListener("click", (event) =>{ // clears last entry entered in calculator
+	display2.innerText = "";
+	displayInput2 = "";
+})
+
+equal.addEventListener("click", (event) =>{
+	if(displayInput2 && displayInput1) return;
+	calculate();
+	clearNum();
 })
 
 function clearNum(name = ""){
@@ -70,23 +102,3 @@ function calculate(){
 		result = parseFloat(result) % parseFloat(displayInput2);
 	}
 }
-
-equal.addEventListener('click', (event) =>{
-	if(!displayInput1 || !displayInput2) return;
-	hasDecimal = false;
-	calculate();
-	clearNum();
-	displayInput2.innerText = result;
-	tempDisplay.innerText = "";
-	displayInput2 = result;
-	displayInput1 = "";
-})
-
-
-
-allClear.addEventListener('click', deleteAll); // try to single out event target to delete number from display input
-
-function deleteAll(){
-	console.log(event);
-}
-
